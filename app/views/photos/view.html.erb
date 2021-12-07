@@ -1,0 +1,68 @@
+<h1>Photo Details</h1>
+
+<dl>
+    <dt>Image</dt>
+    <dd><%= image_tag(@photo.image.url , :alt => "rss feed") %></dd>
+
+    <dt>Caption</dt>
+    <dd><%= @photo.caption %></dd>
+
+    <dt>Owner</dt>
+    <dd><%= @user.username %></dd>
+
+    <dt>Posted</dt>
+    <dd><%= time_ago_in_words(@photo.created_at) %> ago</dd>
+
+    <dt>Likes count</dt>
+    <dd><%= @photo.likes_count %></dd>
+
+    <dt>Comments count</dt>
+    <dd><%= @photo.comments_count %></dd>
+
+    <dt>Fans</dt>
+    <dd>
+        <% @likes.each do |like| %>
+            <span><%= get_user_name(like.user_id) %> </span>
+        <% end %>
+    </dd>
+
+    <dt>Add a fan</dt>
+    <% if @liked%>
+        <dd><%= button_to "UnLike",likes_remove_path(user: Current.user.id,photo:@photo.id) %></dd>
+    <%else%>
+        <dd><%= button_to "Like",likes_add_path(user: Current.user.id,photo:@photo.id) %></dd>
+    <%end%>
+    
+</dl>
+
+<h2>Comments</h2>
+
+<table>
+  <thead>
+    <tr>
+        <th>Commenter</th>
+        <th>Comment</th>
+        <th>Posted</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @comments.each do |comments| %>
+      <tr>
+        <td><%= get_user_name(comments.user_id) %></td>
+        <td><%= comments.body %></td>
+        <td><%= time_ago_in_words(comments.created_at) %> ago</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if Current.user %>
+    <h3>Add new comment</h3>
+    <%= form_with url:comments_add_path(photo:@photo.id,user:Current.user.id),model: @comment do |form| %>
+        <%= form.label :Comments%>
+        <%= form.text_area  :body %>
+        <%= form.submit "Add comment" %>
+    <% end %>
+    <hr />
+<% end %>

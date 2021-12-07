@@ -1,0 +1,19 @@
+<h1>Sign Up</h1>
+
+<%= form_with model:@user,url: create_users_path do |form| %>
+    <div><%= form.label :email%>
+    <%= form.text_field :email, placeholder:"Choose a email..." %></div>
+    <div><%= form.label :password%>
+    <%= form.password_field :password, placeholder:"Choose a password..."%></div>
+    <div><%= form.label :password_confirmation%>
+    <%= form.password_field :password_confirmation, placeholder:"Confirm Your Password..."%></div>
+    <div><%= form.label :username%>
+    <%= form.text_field :username %></div>
+    <div><%= form.label :private%>
+    <%= form.check_box :private %></div>
+
+    <%= form.submit "Sign up"%>
+<% end %>
+
+<hr />
+<p>Or, <%= link_to "Sign in", login_users_path %> instead.</p>

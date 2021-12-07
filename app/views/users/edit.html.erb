@@ -1,0 +1,28 @@
+<h1>Edit User Account</h1>
+
+<%= form_with model:@user,method:"POST",url: edit_users_path do |form| %>
+    <div><%= form.label :email%>
+    <%= form.text_field :email, value:@user.email %></div>
+
+    <div><%= form.label :comments_count %>
+    <%= form.text_field :comments_count, value:@user.comments_count %></div>
+
+    <div><%= form.label :likes_count %>
+    <%= form.text_field :likes_count, value:@user.likes_count  %></div>
+
+    <div><%= form.label :username%>
+    <%= form.text_field :username, value:@user.username %></div>
+
+    <div><%= form.label :private%>
+    <%= form.check_box :private %></div>
+
+    <div><%= form.label :password%>
+    <%= form.password_field :password, placeholder:"Choose a password..."%></div>
+
+    <div><%= form.label :password_confirmation%>
+    <%= form.password_field :password_confirmation, placeholder:"Confirm Your Password..."%></div>
+
+    
+
+    <%= form.submit "Update Account"%>
+<% end %>

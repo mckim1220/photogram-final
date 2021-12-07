@@ -1,0 +1,50 @@
+<% if @foundUser %>
+    <h1><%= @foundUser.username %></h1>
+    <dl>
+        <dt>Private</dt>
+        <dd><%= @foundUser.private %></dd>
+        <dt>Followers</dt>
+        <dd><%= @followers.count %></dd>
+        <dt>Following</dt>
+        <dd><%= @following %></dd>
+    </dl>
+    <ul>
+        <% if Current.user.id == @foundUser.id && @followReqs.present?%>
+            <% @followReqs.each do |reqs|%>
+                <li><%= get_user_name(reqs.sender_id) %><%= button_to "Accept", follow_accept_path(id: reqs.sender_id) %><%= button_to "Deny", follow_deny_path(id: reqs.sender_id) %></li>
+            <% end %>
+        <% end %>
+    </ul>
+    <ul>
+        <li>Profile</li>
+        <li>Liked photos</li>
+        <li>Feed</li>
+        <li>Discover</li>
+    </ul>
+    <h2>Owned Photos (<%=  @photos.count %>)<h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Caption</th>
+                <th>Owner</th>
+                <th>Posted</th>
+                <th>Likes</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% @photos.each do |photo| %>
+            <tr>
+                <td><%= image_tag(photo['image']['url'] , :alt => "rss feed") %></td>
+                <td><%= photo['caption'] %></td>
+                <td><%= @foundUser.username %></td>
+                <td><%= time_ago_in_words(photo['created_at']) %> ago</td>
+                <td><%= photo['likes_count'] %></td>
+                <td><%= link_to "Show details", photos_view_path(id:photo['id'])%></td>
+            </tr>
+            <% end %>
+        </tbody>
+    </table>
+<% end %>

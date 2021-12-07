@@ -1,0 +1,57 @@
+<h1>List of users</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Private?</th>
+      <% if Current.user %>
+        <th>Follow</th>
+      <% end %>
+      
+      <th>Account</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  
+    <% @users.each do |users| %>
+      <tr>
+        <td><%= users.username %></td>
+        <% if users.private %>
+            <td>Yes</td>
+        <% else %>
+            <td>No</td>
+        <% end %>
+        <% if Current.user%>
+          <% if users.id != Current.user.id %>
+            <% if @follows.present? %>
+              <% @follows.each do |follows|
+              if follows.recipient_id == users.id && follows.status == "pending"
+                %> 
+                  <td><%= button_to "Requested", follow_remove_path(id: follows.recipient_id)%></td>
+                <%
+                break
+              elsif follows.recipient_id == users.id && follows.status == "ok"
+                %> 
+                  <td><%= button_to "Unfollow", unfollow_path(id: follows.recipient_id) %></td>
+                <%
+                break
+              else%>
+                <td><%= button_to "Follow",user_follow_path(name: users.username ) %></td>
+              <% end %>
+            <% end%>
+            <% else %>
+              <td><%= button_to "Follow",user_follow_path(name: users.username ) %></td>
+            <% end %>
+            
+          <% else %>
+            <td><%= button_to "You",root_path,method:"get" %></td>
+          <% end %>
+            
+        <% end %>
+        
+        <td><%= link_to "Show details", view_users_path(name:users.username)%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
