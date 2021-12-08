@@ -6,7 +6,7 @@ class LikesController < ApplicationController
     myLike = Like.new
     photoid =  params[:photo]
     userid =  params[:user]
-    myLike.user_id = userid
+    myLike.fan_id = userid
     myLike.photo_id = photoid
     if myLike.save!
       photop = Photo.find_by(id:photoid)
@@ -22,7 +22,7 @@ class LikesController < ApplicationController
   end
 
   def remove
-    myLike = Like.find_by(user_id:params[:user],photo_id:params[:photo])
+    myLike = Like.find_by(fan_id:params[:user],photo_id:params[:photo])
     if myLike.destroy
       photop = Photo.find_by(id: params[:photo])
       photop.update(likes_count: photop.likes_count - 1)

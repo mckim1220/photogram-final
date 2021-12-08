@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   post 'followers/accept/:id',to:"followers#accept", as:"follow_accept"
   post 'followers/deny/:id',to:"followers#deny", as:"follow_deny"
   post 'followers/remove/:id',to:"followers#remove",as:"follow_remove"
-  post 'followers/removefall/:id',to:"followers#removefall",as:"unfollow"
+  get 'followers/removefall/:id',to:"followers#removefall",as:"unfollow"
   get 'users', to:"users#index"
   
   get 'users/view/:name', to:"users#view",as:"view_users"
@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   get 'users/edit', as:"edit_users"
   get 'users/update', as:"update_users"
   get 'users/delete', as:"delete_users"
-  get 'users/login', as:"login_users",to:"users#login"
+  get 'user_sign_in', as:"login_users",to:"users#login"
   post 'users/logged', as:"login_user",to:"users#logged"
   get 'users/logout', as:"logout_users",to:"users#logout"
   root to:"users#index"

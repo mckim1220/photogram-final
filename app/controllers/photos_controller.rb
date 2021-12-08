@@ -7,10 +7,10 @@ class PhotosController < ApplicationController
   def view
     if Current.user
       @photo = Photo.find_by(id:params[:id])
-      @user = User.find_by(id:@photo.user_id)
+      @user = User.find_by(id:@photo.owner_id)
       @comments = Comment.where(photo_id:params[:id])
       @likes = Like.where(photo_id:params[:id])
-      @liked = Like.find_by(user_id:Current.user.id,photo_id:params[:id])
+      @liked = Like.find_by(fan_id:Current.user.id,photo_id:params[:id])
       @comment= Comment.new
     else
         flash[:alert] = "You have to sign in first."

@@ -13,41 +13,43 @@
 ActiveRecord::Schema.define(version: 2021_12_06_105614) do
 
   create_table "comments", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.integer "author_id", null: false
     t.integer "photo_id", null: false
     t.text "body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["author_id"], name: "index_comments_on_author_id"
     t.index ["photo_id"], name: "index_comments_on_photo_id"
-    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "follows", force: :cascade do |t|
+  create_table "follow_requests", force: :cascade do |t|
     t.integer "recipient_id", null: false
     t.integer "sender_id", null: false
     t.string "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["recipient_id"], name: "index_follow_requests_on_recipient_id"
+    t.index ["sender_id"], name: "index_follow_requests_on_sender_id"
   end
 
   create_table "likes", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.integer "fan_id", null: false
     t.integer "photo_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["fan_id"], name: "index_likes_on_fan_id"
     t.index ["photo_id"], name: "index_likes_on_photo_id"
-    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "photos", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.integer "owner_id", null: false
     t.integer "likes_count"
     t.string "image"
     t.integer "comments_count"
     t.text "caption"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_photos_on_user_id"
+    t.index ["owner_id"], name: "index_photos_on_owner_id"
   end
 
   create_table "users", force: :cascade do |t|

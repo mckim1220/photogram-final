@@ -19,7 +19,7 @@
 #
 class User < ApplicationRecord
   has_secure_password
-  has_many :photo
+  has_many :photo, foreign_key: :owner_id
   has_many :comment
   has_many :like
 

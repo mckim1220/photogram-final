@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
 
   def add
     comments = Comment.new(comment_params)
-    comments.user = Current.user
+    comments.author_id = Current.user.id
     comments.photo = Photo.find_by(id:params[:photo])
     comments.body = params[:comment][:body]
     puts params[:body]

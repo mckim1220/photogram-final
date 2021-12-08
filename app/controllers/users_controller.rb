@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   def index
     if Current.user
       @users = User.all
-      @follows = Follow.where(sender_id:Current.user.id)
+      @follows = FollowRequest.where(sender_id:Current.user.id)
     else
       @users = User.all
     end
@@ -12,12 +12,12 @@ class UsersController < ApplicationController
     if Current.user
       @foundUser = User.find_by(username: params[:name])
       @userFull = User.where(username: params[:name]).includes(:photo).as_json(include: :photo)[0]
-      @following = Follow.where(sender_id: @foundUser.id,status:"ok").count
-      @followers = Follow.where(recipient_id: @foundUser.id,status:"ok")
-      @followReqs = Follow.where(recipient_id: @foundUser.id,status:"pending")
+      @following = FollowRequest.where(sender_id: @foundUser.id,status:"ok").count
+      @followers = FollowRequest.where(recipient_id: @foundUser.id,status:"ok")
+      @followReqs = FollowRequest.where(recipient_id: @foundUser.id,status:"pending")
       @photos = @userFull['photo']
       if @foundUser.id != Current.user.id && @foundUser.private
-        checkFollow = Follow.where(recipient_id: @foundUser.id,sender_id: Current.user.id ,status:"ok").count
+        checkFollow = FollowRequest.where(recipient_id: @foundUser.id,sender_id: Current.user.id ,status:"ok").count
         if checkFollow == 0
           flash[:alert] = "This is private account."
           redirect_to root_path

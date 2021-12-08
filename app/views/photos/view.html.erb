@@ -22,7 +22,7 @@
     <dt>Fans</dt>
     <dd>
         <% @likes.each do |like| %>
-            <span><%= get_user_name(like.user_id) %> </span>
+            <span><%= get_user_name(like.fan_id) %> </span>
         <% end %>
     </dd>
 
@@ -49,7 +49,7 @@
   <tbody>
     <% @comments.each do |comments| %>
       <tr>
-        <td><%= get_user_name(comments.user_id) %></td>
+        <td><%= get_user_name(comments.author_id) %></td>
         <td><%= comments.body %></td>
         <td><%= time_ago_in_words(comments.created_at) %> ago</td>
       </tr>

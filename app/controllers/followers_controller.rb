@@ -6,7 +6,7 @@ class FollowersController < ApplicationController
       user = Current.user
 
       if target.private
-        follow = Follow.new({sender_id:user.id,recipient_id:target.id,status:"pending"})
+        follow = FollowRequest.new({sender_id:user.id,recipient_id:target.id,status:"pending"})
         if follow.save
           flash[:alert] = "Follow request sent!"
           redirect_to root_path
@@ -15,7 +15,7 @@ class FollowersController < ApplicationController
           redirect_to root_path
         end
       else
-        follow = Follow.new({sender_id:user.id,recipient_id:target.id,status:"ok"})
+        follow = FollowRequest.new({sender_id:user.id,recipient_id:target.id,status:"ok"})
 
         if follow.save
           flash[:alert] = "You are following him now!"
@@ -34,7 +34,7 @@ class FollowersController < ApplicationController
     if Current.user
       target = User.find_by(id: params[:id])
       user = Current.user
-      follow = Follow.find_by(sender_id:target.id,recipient_id:user.id,status:"pending")
+      follow = FollowRequest.find_by(sender_id:target.id,recipient_id:user.id,status:"pending")
       if follow.update(status:"ok")
         flash[:alert] = "You accepted that"
         redirect_to root_path
@@ -51,7 +51,7 @@ class FollowersController < ApplicationController
     if Current.user
       target = User.find_by(id: params[:id])
       user = Current.user
-      follow = Follow.find_by(sender_id:target.id,recipient_id:user.id,status:"pending")
+      follow = FollowRequest.find_by(sender_id:target.id,recipient_id:user.id,status:"pending")
       if follow.destroy
         flash[:alert] = "You rejected that"
         redirect_to root_path
@@ -68,7 +68,7 @@ class FollowersController < ApplicationController
     if Current.user
       target = User.find_by(id: params[:id])
       user = Current.user
-      follow = Follow.find_by(sender_id:target.id,recipient_id:user.id)
+      follow = FollowRequest.find_by(sender_id:target.id,recipient_id:user.id)
       if follow.destroy
         flash[:alert] = "You unfollowed that"
         redirect_to root_path
@@ -85,7 +85,7 @@ class FollowersController < ApplicationController
     if Current.user
       target = User.find_by(id: params[:id])
       user = Current.user
-      follow = Follow.find_by(sender_id:user.id,recipient_id:target.id)
+      follow = FollowRequest.find_by(sender_id:user.id,recipient_id:target.id)
       if follow.destroy
         flash[:alert] = "You unfollowed that"
         redirect_to root_path
