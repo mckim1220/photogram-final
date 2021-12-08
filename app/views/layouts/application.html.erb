@@ -13,7 +13,25 @@
 
     <%= stylesheet_link_tag    'application', media: 'all' %>
   </head>
-
+  <ul>
+      <li><%= link_to "All users", users_path %></li>
+      <li><%= link_to "All public photos", photos_path %></li>
+      <% if Current.user %>
+        <li><%= link_to Current.user.username, edit_users_path %></li>
+      <% else %>
+        <li><%= link_to "Sign in", login_users_path %></li>
+      <% end %>
+      <% if Current.user %>
+        <li><%= link_to "Sign out", logout_users_path%></li>
+      <% else %>
+        <li><%= link_to "Sign up", new_users_path %></li>
+      <% end %>
+  </ul>
+  <% if flash[:alert] %>
+      <div>
+          <p><%= flash[:alert] %></p>  
+      </div>
+  <% end %>
   <body>
     <%= yield %>
   </body>

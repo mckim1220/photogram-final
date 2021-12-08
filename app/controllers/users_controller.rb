@@ -79,7 +79,7 @@ class UsersController < ApplicationController
           flash[:alert] = "Your account has been updated"
           render :edit
         else
-          flash[:alert] = "Something wen wrong!"
+          flash[:alert] = "Something went wrong!"
           render :edit
         end
     else

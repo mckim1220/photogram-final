@@ -33,7 +33,7 @@ Rails.application.routes.draw do
   get 'users/delete', as:"delete_users"
   get 'users/login', as:"login_users",to:"users#login"
   post 'users/logged', as:"login_user",to:"users#logged"
-  delete 'users/logout', as:"logout_users",to:"users#logout"
+  get 'users/logout', as:"logout_users",to:"users#logout"
   root to:"users#index"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
